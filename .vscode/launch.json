@@ -1,0 +1,41 @@
+// AUTOMATICALLY GENERATED FILE. PLEASE DO NOT MODIFY IT MANUALLY
+//
+// PIO Unified Debugger
+//
+// Documentation: https://docs.platformio.org/page/plus/debugging.html
+// Configuration: https://docs.platformio.org/page/projectconf/section_env_debug.html
+
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal"
+        },
+        {
+            "type": "platformio-debug",
+            "request": "launch",
+            "name": "PIO Debug",
+            "executable": "/Users/guinmoon/Documents/PlatformIO/Projects/My8x8AdafruitMatrix/.pio/build/nodemcuv2/firmware.elf",
+            "projectEnvName": "nodemcuv2",
+            "toolchainBinDir": "/Users/guinmoon/.platformio/packages/toolchain-xtensa/bin",
+            "internalConsoleOptions": "openOnSessionStart",
+            "preLaunchTask": {
+                "type": "PlatformIO",
+                "task": "Pre-Debug"
+            }
+        },
+        {
+            "type": "platformio-debug",
+            "request": "launch",
+            "name": "PIO Debug (skip Pre-Debug)",
+            "executable": "/Users/guinmoon/Documents/PlatformIO/Projects/My8x8AdafruitMatrix/.pio/build/nodemcuv2/firmware.elf",
+            "projectEnvName": "nodemcuv2",
+            "toolchainBinDir": "/Users/guinmoon/.platformio/packages/toolchain-xtensa/bin",
+            "internalConsoleOptions": "openOnSessionStart"
+        }
+    ]
+}

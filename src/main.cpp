@@ -391,21 +391,6 @@ void loop()
         int show_payload = random(0, 4);
         if (show_payload != 1)
         {
-            // // SCENE LOOP
-            // for (int scene_ind = 0; scene_ind < 5; scene_ind++)
-            // {
-            //     if (Text_to_Show != "" || Pixels_to_Show != "")
-            //     {
-            //         return;
-            //     }
-            //     get_and_show_payload(scene_ind);
-            //     delay(scene_delay);
-            // }
-            // // SHOW WMODE
-            // get_and_show_payload(111);
-            // delay(after_wmode_delay);
-            // Serial.print("REQUESTS ");
-            // Serial.println(Requests_Count);
             for (int scene_ind = 0; scene_ind < Requests_Count; scene_ind++)
             {
                 if (Text_to_Show != "" || Pixels_to_Show != "")

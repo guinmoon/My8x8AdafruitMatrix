@@ -54,12 +54,6 @@ int data_refresh_delay = 5;
 String anim_repeat_3 = "03";
 String anim_repeat_6 = "06";
 
-String temp_1 = "0";
-String hum_1 = "0";
-String temp_2 = "0";
-String temp_w1 = "0";
-String wmode = "";
-
 const int Requests_Count = sizeof(request_urls) / 8;
 asyncHTTPrequest async_requests[Requests_Count];
 int req_indexes[Requests_Count];
@@ -130,42 +124,6 @@ std::vector<std::string> split_str(std::string input_str, std::string delimiter)
     return splited_str;
 }
 
-// *********Sync Method DEPRECATED!!!**********
-// String httpGETRequest(const char *serverName)
-// {
-//     HTTPClient http;
-//     // Your IP address with path or Domain name with URL path
-//     http.begin(serverName);
-//     // Send HTTP POST request
-//     int httpResponseCode = http.GET();
-//     String payload = "";
-//     if (httpResponseCode > 0)
-//     {
-//         Serial.print("HTTP Response code: ");
-//         Serial.println(httpResponseCode);
-//         payload = http.getString();
-//     }
-//     else
-//     {
-//         Serial.print("Error code: ");
-//         Serial.println(httpResponseCode);
-//     }
-//     // Free resources
-//     http.end();
-//     return payload;
-// }
-// void get_data_sets()
-// {
-//     temp_1 = httpGETRequest("http://192.168.1.45:1880/get_temp1");
-//     // Serial.println("temp_1");
-//     // Serial.println(temp_1);
-//     temp_2 = httpGETRequest("http://192.168.1.45:1880/get_temp2");
-//     hum_1 = httpGETRequest("http://192.168.1.45:1880/get_hum1");
-//     temp_w1 = httpGETRequest("http://192.168.1.45:1880/temp_w1");
-//     wmode = httpGETRequest("http://192.168.1.45:1880/wmode");
-// }
-// *************************************
-
 void print_img(String pixels_full, bool only_prepare = false)
 {
     int byte_pixel5[5];
@@ -227,47 +185,6 @@ void print_text(String text, int x, int R, int G, int B, bool only_prepare = fal
         matrix.show();
 }
 
-// void print_text_from_params(String allParams)
-// {
-//     dispText = allParams.substring(allParams.indexOf("text=") + 5);
-//     x = matrix.width();
-//     // int m_w=matrix.width();
-//     byte tcolor[3] = {220, 180, 20};
-//     if (allParams.indexOf("tcolor=") >= 0)
-//     {
-//         String str_tcolor = allParams.substring(allParams.indexOf("tcolor=") + 7, allParams.indexOf("&"));
-//         std::vector<std::string> str_text_color = split_str(str_tcolor.c_str(), ":");
-//         Serial.print("STR[COLOR]");
-//         Serial.print(str_tcolor);
-//         tcolor[0] = std::atoi(str_text_color[0].c_str());
-//         tcolor[1] = std::atoi(str_text_color[1].c_str());
-//         tcolor[2] = std::atoi(str_text_color[2].c_str());
-//         allParams = allParams.substring(allParams.indexOf("x="));
-//     }
-//     if (allParams.indexOf("x=") >= 0)
-//     {
-//         // matrix.setTextColor(matrix.Color(200,80,20));
-//         x = dispText.substring(allParams.indexOf("x=") + 2, allParams.indexOf("x=") + 3).toInt();
-//         dispText = dispText.substring(dispText.indexOf("&") + 1);
-//         print_text(dispText, x, tcolor[0], tcolor[1], tcolor[2]);
-//     }
-//     else
-//     {
-//         pixelsInText = (dispText.length() * 7) + 8;
-//         for (int i = 0; i < pixelsInText + 1; i++)
-//         {
-//             matrix.setCursor(--x, 0);
-//             matrix.print(dispText);
-//             matrix.show();
-//             delay(200);
-//             if (x + 17 <= (matrix.width() - pixelsInText))
-//             {
-//                 x = matrix.width();
-//             }
-//         }
-//     }
-// }
-
 void get_data_sets_async()
 {
     for (int r_ind = 0; r_ind < Requests_Count; r_ind++)
@@ -288,26 +205,6 @@ void requestCB(void *optParm, asyncHTTPrequest *request, int readyState)
         int req_index = *(int *)optParm;
         Serial.println(resp_text + " " + req_index);
         Responses[req_index] = resp_text;
-        // switch (req_index)
-        // {
-        // case 0:
-        //     temp_1 = resp_text;
-        //     break;
-        // case 1:
-        //     temp_2 = resp_text;
-        //     break;
-        // case 2:
-        //     hum_1 = resp_text;
-        //     break;
-        // case 3:
-        //     temp_w1 = resp_text;
-        //     break;
-        // case 4:
-        //     wmode = resp_text;
-        //     break;
-        // default:
-        //     break;
-        // }
     }
 }
 
@@ -349,63 +246,6 @@ void get_and_show_payload(char mode, byte R, byte G, byte B, String text)
         if (mode == 'h')
             print_img(humidity_sign, true);
         print_text(text, x, tcolor[0], tcolor[1], tcolor[2]);
-    }
-}
-void get_and_show_payload_old(int mode = 1)
-{
-    if (mode == 1)
-    {
-        matrix.fillScreen(0);
-        byte tcolor[3] = {220, 80, 20};
-        int x = 0;
-        print_img(temperature_sign, true);
-        print_text(temp_1, x, tcolor[0], tcolor[1], tcolor[2]);
-    }
-    if (mode == 2)
-    {
-        matrix.fillScreen(0);
-        byte tcolor[3] = {220, 180, 20};
-        int x = 0;
-        print_img(temperature_sign, true);
-        print_text(temp_2, x, tcolor[0], tcolor[1], tcolor[2]);
-    }
-    if (mode == 3)
-    {
-        matrix.fillScreen(0);
-        byte tcolor[3] = {60, 80, 140};
-        int x = 0;
-        print_img(humidity_sign, true);
-        print_text(hum_1, x, tcolor[0], tcolor[1], tcolor[2]);
-    }
-    if (mode == 4)
-    {
-        matrix.fillScreen(0);
-        byte tcolor[3] = {60, 180, 60};
-        int x = 0;
-        print_img(temperature_sign, true);
-        print_text(temp_w1, x, tcolor[0], tcolor[1], tcolor[2]);
-    }
-    if (mode == 111)
-    {
-        matrix.fillScreen(0);
-        // print_img(fire_anim);
-        // Serial.println("SHOW WMODE");
-        if (wmode.indexOf("rain") > 0 || wmode.indexOf("drizzle") > 0)
-        {
-            print_img(cloud_rain);
-        }
-        else if (wmode.indexOf("cloud") > 0)
-        {
-            print_img(cloud);
-        }
-        else if (wmode.indexOf("snow") > 0)
-        {
-            print_img(snow);
-        }
-        else
-        {
-            print_img(sun);
-        }
     }
 }
 

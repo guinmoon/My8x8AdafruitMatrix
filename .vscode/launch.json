@@ -36,6 +36,16 @@
             "projectEnvName": "nodemcuv2",
             "toolchainBinDir": "/Users/guinmoon/.platformio/packages/toolchain-xtensa/bin",
             "internalConsoleOptions": "openOnSessionStart"
+        },
+        {
+            "type": "platformio-debug",
+            "request": "launch",
+            "name": "PIO Debug (without uploading)",
+            "executable": "/Users/guinmoon/Documents/PlatformIO/Projects/My8x8AdafruitMatrix/.pio/build/nodemcuv2/firmware.elf",
+            "projectEnvName": "nodemcuv2",
+            "toolchainBinDir": "/Users/guinmoon/.platformio/packages/toolchain-xtensa/bin",
+            "internalConsoleOptions": "openOnSessionStart",
+            "loadMode": "manual"
         }
     ]
 }
